@@ -19,7 +19,7 @@ Beberapa tools yang digunakan dan langkah-langkahnya untuk mengatasi gambar nois
 
 ---
 
-## 2. Perbandingan Visual
+## Perbandingan Visual
 Berikut merupakan hasil perbandingan antara citra input yang rusak dengan citra hasil restorasi akhir:
 
 | Citra Input (Noisy) | Citra Output (Restored) |
@@ -28,7 +28,7 @@ Berikut merupakan hasil perbandingan antara citra input yang rusak dengan citra 
 
 ---
 
-## 3. Analisis Singkat
+## Analisis 
 * **Keberhasilan:** - Kombinasi Median dan Gaussian filter berhasil menciptakan latar belakang dan kulit yang bersih dari noise.
     - Penggunaan teknik **Luminance Scaling** pada Histogram Equalization berhasil meningkatkan kontras secara signifikan namun tetap menjaga keaslian warna (tidak menjadi kemerahan).
     - Detail mata dan rambut kembali terlihat tegas berkat teknik penajaman ganda (Sobel + Unsharp Mask).
@@ -37,7 +37,7 @@ Berikut merupakan hasil perbandingan antara citra input yang rusak dengan citra 
 
 ---
 
-## 4. Cara Menjalankan Program
+## Cara Menjalankan Program
 1. Pastikan library Python berikut sudah terinstal:
    ```bash
    pip install numpy opencv-python matplotlib
