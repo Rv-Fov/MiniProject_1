@@ -30,6 +30,7 @@ Berikut merupakan hasil perbandingan antara citra input yang rusak dengan citra 
 
 ## Analisis 
 Restorasi citra Lena ini berhasil mengintegrasikan metode Median dan Gaussian Filter untuk menciptakan area tekstur kulit yang bersih dari noise impulsif maupun aditif tanpa menghilangkan esensi visual objek. Penggunaan teknik Luminance Scaling pada tahap ekualisasi histogram menjadi faktor kunci dalam meningkatkan kontras citra secara signifikan dengan tetap mempertahankan akurasi warna kulit yang natural. 
+
 Meskipun detail halus pada mata dan rambut berhasil ditonjolkan melalui penajaman ganda (Sobel dan Unsharp Masking), proses ini masih memiliki kendala pada efisiensi waktu komputasi akibat penggunaan nested loop manual pada NumPy yang dapat dioptimalkan lebih lanjut menggunakan teknik vectorization. Selain itu, pengaturan threshold penajaman masih dapat disempurnakan untuk meminimalisir munculnya sedikit artefak ringing pada area dengan transisi intensitas yang sangat tajam.
 
 ---
