@@ -11,9 +11,9 @@ Beberapa tools yang digunakan dan langkah-langkahnya untuk mengatasi gambar nois
 
 | Langkah | Teknik | Penjelasan |
 | :--- | :--- | :--- |
-| **1** | **Median Filter ($3 \times 3$)** | Digunakan sebagai tahap awal untuk menghilangkan *Salt-and-pepper noise* (noise impulsif). Dipilih karena median filter sangat efektif membuang nilai piksel ekstrim tanpa merusak tepi objek secara drastis. |
-| **2** | **Gaussian Filter ($3 \times 3$)** | Digunakan untuk mereduksi *Gaussian noise* yang bersifat aditif. Filter ini menghaluskan citra agar bintik-bintik halus (grainy) hilang setelah noise tajam dibuang. |
-| **3** | **Histogram Equalization (Luminance Scaling)** | Memperbaiki citra yang kusam (*low contrast*). Proses dilakukan dengan mengonversi RGB ke **Y (Luminance)**, melakukan ekualisasi intensitas, lalu mengalikan faktor skalanya kembali ke RGB asli agar warna kulit tetap natural dan tidak terjadi *color shift*. |
+| **1** | **Median Filter ($3 \times 3$)** | Tahap awal untuk menghilangkan Salt-and-pepper noise karena efektif membuang nilai piksel tanpa merusak tepi objek. |
+| **2** | **Gaussian Filter ($3 \times 3$)** | Digunakan untuk mereduksi Gaussian noise yang dengan menghaluskan citra agar bintik-bintik hilang. |
+| **3** | **Histogram Equalization** | Memperbaiki citra low contrast, proses dilakukan dengan mengonversi RGB ke **Y (Luminance)**, melakukan ekualisasi intensitas, lalu mengalikan faktor skalanya kembali ke RGB asli agar warna kulit tetap natural dan tidak terjadi *color shift*. |
 | **4** | **Sobel Edge Enhancement** | Teknik untuk memperkuat struktur citra. Dengan menghitung gradien $G_x$ dan $G_y$, tepi objek dideteksi lalu ditambahkan kembali ke citra untuk mengompensasi detail yang hilang akibat proses pembersihan noise. |
 | **5** | **Unsharp Masking** | Tahap final penajaman (*sharpening*). Menggunakan selisih antara citra asli dan citra yang dikaburkan (mask) untuk menonjolkan frekuensi tinggi pada detail wajah, mata, dan topi. |
 
