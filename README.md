@@ -6,10 +6,10 @@
 
 ---
 
-## 1. Penjelasan Pipeline Restorasi
-Citra input "Lena Noisy" memiliki kerusakan berupa *low contrast*, *Gaussian noise*, *Salt-and-pepper noise*, dan *Blur*. Untuk mengatasinya, saya membangun pipeline restorasi manual menggunakan **NumPy** dengan tahapan sebagai berikut:
+## Penjelasan Pipeline Restorasi
+Beberapa tools yang digunakan dan langkah-langkahnya untuk mengatasi gambar noisy ini yakni adalah : 
 
-| Langkah | Teknik | Alasan & Tujuan |
+| Langkah | Teknik | Penjelasan |
 | :--- | :--- | :--- |
 | **1** | **Median Filter ($3 \times 3$)** | Digunakan sebagai tahap awal untuk menghilangkan *Salt-and-pepper noise* (noise impulsif). Dipilih karena median filter sangat efektif membuang nilai piksel ekstrim tanpa merusak tepi objek secara drastis. |
 | **2** | **Gaussian Filter ($3 \times 3$)** | Digunakan untuk mereduksi *Gaussian noise* yang bersifat aditif. Filter ini menghaluskan citra agar bintik-bintik halus (grainy) hilang setelah noise tajam dibuang. |
