@@ -1,0 +1,80 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+def filter_median(citra, ukuran=3):
+    pad = ukuran // 2
+    img_pad = np.pad(citra, pad, mode='edge')
+    hasil = np.zeros_like(citra)
+    h, w = citra.shape
+    for i in range(h):
+        for j in range(w):
+            jendela = img_pad[i:i+ukuran, j:j+ukuran]
+            hasil[i, j] = np.median(jendela)
+    return hasil
+
+def perbaiki_kontras(citra):
+    hist, _ = np.histogram(citra.flatten(), 256, [0,256])
+    cdf = hist.cumsum()
+    cdf_mask = np.ma.masked_equal(cdf, 0)
+    cdf_mask = (cdf_mask - cdf_mask.min()) * 255 / (cdf_mask.max() - cdf_mask.min())
+    cdf_final = np.ma.filled(cdf_mask, 0).astype('uint8')
+    return cdf_final[citra]
+
+def pertajam_gambar(citra):
+    kernel = np.array([[0, -1, 0],
+                       [-1, 5, -1],
+                       [0, -1, 0]])
+    img_pad = np.pad(citra, 1, mode='edge')
+    hasil = np.zeros_like(citra, dtype=np.float32)
+    h, w = citra.shape
+    for i in range(h):
+        for j in range(w):
+            area = img_pad[i:i+3, j:j+3]
+            hasil[i, j] = np.sum(area * kernel)
+    return np.clip(hasil, 0, 255).astype(np.uint8)
+
+def mulai_restorasi(nama_file):
+    img = cv2.imread(nama_file)
+    if img is None:
+        return None
+
+    b, g, r = cv2.split(img)
+    warna = [b, g, r]
+    
+    h_denoise = []
+    h_kontras = []
+    h_final = []
+
+    for ch in warna:
+        step1 = filter_median(ch, 3)
+        h_denoise.append(step1)
+        
+        step2 = perbaiki_kontras(step1)
+        h_kontras.append(step2)
+        
+        step3 = pertajam_gambar(step2)
+        h_final.append(step3)
+
+    denoise = cv2.merge(h_denoise)
+    kontras = cv2.merge(h_kontras)
+    restored = cv2.merge(h_final)
+
+    return img, denoise, kontras, restored
+
+if __name__ == "__main__":
+    file_input = 'test_image_lena_noisy.png' 
+    ori, step_1, step_2, step_3 = mulai_restorasi(file_input)
+
+    if ori is not None:
+        cv2.imwrite('output/1_denoised.png', step_1)
+        cv2.imwrite('output/2_contrast.png', step_2)
+        cv2.imwrite('output/lena_restored_final.png', step_3)
+
+        plt.figure(figsize=(15, 5))
+        plt.subplot(1, 4, 1); plt.title("Original Noisy"); plt.imshow(cv2.cvtColor(ori, cv2.COLOR_BGR2RGB))
+        plt.subplot(1, 4, 2); plt.title("Step 1: Denoise"); plt.imshow(cv2.cvtColor(step_1, cv2.COLOR_BGR2RGB))
+        plt.subplot(1, 4, 3); plt.title("Step 2: Contrast"); plt.imshow(cv2.cvtColor(step_2, cv2.COLOR_BGR2RGB))
+        plt.subplot(1, 4, 4); plt.title("Step 3: Final"); plt.imshow(cv2.cvtColor(step_3, cv2.COLOR_BGR2RGB))
+        plt.tight_layout()
+        plt.show()
