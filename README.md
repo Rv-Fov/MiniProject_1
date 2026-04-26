@@ -24,7 +24,7 @@ Berikut merupakan hasil perbandingan antara citra input yang rusak dengan citra 
 
 | Citra Input (Noisy) | Citra Output (Restored) |
 | :---: | :---: |
-| ![Input](test_image_lena_noisy.png) | ![Output](lena_restored_final.png) |
+| ![Input](test_image_lena_noisy.png) | ![Output](lena_restored.png) |
 
 ---
 
