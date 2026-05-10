@@ -47,12 +47,12 @@ Berikut adalah progres pengolahan citra dari setiap tahapan filter yang dilakuka
 
 | Tahap 1: Grayscale & Blur | Tahap 2: Otsu Threshold |
 | :---: | :---: |
-| ![Gray](Tahap/1_gray_blur.png) | ![Threshold](Tahap/2_threshold.png) |
+| ![Gray](Tahapan/GrayScale.png) | ![Threshold](Tahapan/OtsuThreshold.png) |
 | *Menghaluskan tekstur aspal* | *Pemisahan awal objek* |
 
 | Tahap 3: Morphology (Cleaning) | Tahap 4: Final Result |
 | :---: | :---: |
-| ![Morphology](Tahap/3_opening.png) | ![Result](output/result.png) |
+| ![Morphology](Tahapan/Morphology(Closed).png) | ![Result](Output/Result.png) |
 | *Pembersihan garis parkir* | *Hasil deteksi 20 mobil* |
 
 ---
