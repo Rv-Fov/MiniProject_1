@@ -1,19 +1,17 @@
 # Mini Project 2 — Object Counting (Hitung Jumlah Mobil)
 
-**Mata Kuliah:** Pengolahan Citra dan Video  
 **Nama:** Muhammad Arifin Umasangadji  
-**NRP:** 5024241083  
-**Departemen:** Teknik Komputer - ITS  
+**NRP:** 5024241083   
 
 ---
 
 ## 1. Deskripsi Tugas
-Tugas ini bertujuan untuk menghitung jumlah mobil pada foto aerial (tampak atas) area parkir menggunakan teknik pengolahan citra digital. Tantangan utama dalam tugas ini adalah memisahkan bodi mobil dari aspal yang memiliki kemiripan warna serta membuang objek pengganggu seperti marka jalan dan garis parkir.
+Tugas ini bertujuan untuk menghitung jumlah mobil pada foto area parkir menggunakan teknik pengolahan citra digital. Tugas utamanya adalah memisahkan bodi mobil dari aspal yang memiliki kemiripan warna serta membuang objek pengganggu seperti marka jalan dan garis parkir.
 
 ---
 
 ## 2. Hasil Deteksi
-Berdasarkan pengujian menggunakan pipeline pengolahan citra yang dirancang:
+Berdasarkan pengujian menggunakan pipeline yang dirancang:
 > **Total Mobil Terdeteksi: 20 Mobil**
 
 ---
@@ -23,22 +21,22 @@ Proyek ini menggunakan pendekatan **Threshold-based Segmentation** yang dipaduka
 
 ### A. Preprocessing (Grayscale & Gaussian Blur)
 * **Filter:** `cv2.cvtColor` & `cv2.GaussianBlur`
-* **Penjelasan:** Citra asli diubah ke skala abu-abu (grayscale) untuk memfokuskan pemrosesan pada intensitas cahaya. Selanjutnya, diterapkan Gaussian Blur untuk menghaluskan noise pada permukaan aspal agar tidak muncul bintik-putih (noise) saat proses segmentasi.
+* **Penjelasan:** Citra asli diubah ke skala abu-abu untuk memfokuskan pemrosesan pada intensitas cahaya. Selanjutnya, diterapkan Gaussian Blur untuk menghaluskan noise pada permukaan aspal agar tidak muncul noise.
 
 ### B. Segmentasi (Otsu Thresholding)
 * **Filter:** `cv2.threshold` (Metode Otsu)
-* **Penjelasan:** Algoritma Otsu secara otomatis mencari nilai ambang batas (threshold) paling optimal. Tahap ini sangat krusial untuk memisahkan objek terang (mobil, garis putih) dari latar belakang yang gelap (aspal).
+* **Penjelasan:** Algoritma Otsu secara otomatis mencari nilai ambang batas (threshold) paling optimal. Tahap ini memisahkan objek terang (mobil, garis putih) dari latar belakang yang gelap (aspal).
 
 ### C. Morphological Operations (Closing & Opening)
 * **Filter:** `cv2.morphologyEx`
 * **Penjelasan:** * **Closing:** Menggunakan kernel besar (15x15) untuk menyatukan bagian bodi mobil yang sering terpecah akibat kaca depan atau atap yang gelap.
-    * **Opening:** Digunakan untuk "membersihkan" sisa-sisa garis parkir dan titik noise kecil yang masih lolos, sehingga hanya menyisakan blok putih yang masif (mobil).
+    * **Opening:** Digunakan untuk "membersihkan" sisa-sisa garis parkir dan titik noise kecil yang masih lolos, sehingga hanya menyisakan blok putih.
 
 ### D. Contour Extraction & Filtering
 * **Teknik:** `cv2.connectedComponentsWithStats`
 * **Penjelasan:** Setiap blok putih dianalisis berdasarkan luas area dan rasio bentuknya. Filter diterapkan dengan parameter:
     * **Area:** > 3500 pixel (membuang noise kecil).
-    * **Aspect Ratio:** Antara 0.6 hingga 2.5 (memastikan bentuknya proporsional sebagai mobil, bukan garis panjang).
+    * **Aspect Ratio:** Antara 0.6 hingga 2.5 untuk memastikan proporsi mobil.
 
 ---
 
@@ -58,9 +56,9 @@ Berikut adalah progres pengolahan citra dari setiap tahapan filter yang dilakuka
 ---
 
 ## 5. Analisis & Kendala
-* **Analisis Akurasi:** Program berhasil mendeteksi 20 mobil secara bersih tanpa menyertakan marka jalan sebagai objek. Hal ini dicapai berkat penggunaan filter *aspect ratio* yang ketat.
-* **Kendala:** Beberapa mobil yang memiliki warna sangat gelap (mendekati warna aspal) sulit tertangkap secara utuh. Jika parameter sensitivitas dinaikkan, marka jalan justru ikut terdeteksi. 20 mobil merupakan titik temu (trade-off) terbaik antara akurasi dan kebersihan deteksi.
-* **Potensi Pengembangan:** Penggunaan teknik **Watershed** atau **Edge-based Detection** (seperti Canny/Sobel) dapat dikombinasikan untuk memisahkan mobil yang terparkir terlalu rapat.
+* **Analisis Akurasi:** Program berhasil mendeteksi 20 mobil secara bersih tanpa menyertakan marka jalan sebagai objek. Hal ini karena penggunaan filter yang ketat.
+* **Kendala:** Beberapa mobil yang memiliki warna sangat gelap (mendekati warna aspal) sulit tertangkap secara utuh. Jika parameter sensitivitas dinaikkan, marka jalan justru ikut terdeteksi.
+* **Pengembangan:** Penggunaan teknik Watershed atau Edge-based Detection dapat dikombinasikan untuk memisahkan mobil yang terparkir terlalu rapat.
 
 ---
 
@@ -68,5 +66,6 @@ Berikut adalah progres pengolahan citra dari setiap tahapan filter yang dilakuka
 1. Pastikan library `opencv-python`, `numpy`, dan `matplotlib` sudah terinstal.
 2. Letakkan file `parking_ori.jpg` di folder utama.
 3. Jalankan script:
+   
    ```bash
    python counting.py
